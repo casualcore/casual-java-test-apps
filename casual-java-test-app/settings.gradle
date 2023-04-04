@@ -1,0 +1,11 @@
+/*
+ * Copyright (c) 2017 - 2018, The casual project. All rights reserved.
+ *
+ * This software is licensed under the MIT license, https://opensource.org/licenses/MIT
+ */
+
+//-*- coding: utf-8 -*-
+include 'casual:test-api'
+include 'casual:test-ejb'
+include 'casual:test-rest'
+include 'casual:casual-test-app'
