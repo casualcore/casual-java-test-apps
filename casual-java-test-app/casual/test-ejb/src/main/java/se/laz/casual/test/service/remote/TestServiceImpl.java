@@ -12,9 +12,9 @@ import se.laz.casual.api.service.CasualService;
 import se.laz.casual.jca.inbound.handler.InboundRequest;
 import se.laz.casual.jca.inbound.handler.InboundResponse;
 
-import javax.ejb.Remote;
-import javax.ejb.Stateless;
-import javax.inject.Inject;
+import jakarta.ejb.Remote;
+import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
 import java.util.Optional;
 
 @Stateless

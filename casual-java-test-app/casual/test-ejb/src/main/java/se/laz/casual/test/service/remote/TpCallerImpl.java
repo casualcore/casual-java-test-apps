@@ -12,7 +12,7 @@ import se.laz.casual.api.flags.Flag;
 import se.laz.casual.api.flags.ServiceReturnState;
 import se.laz.casual.connection.caller.CasualCaller;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 public class TpCallerImpl implements TpCaller
 {

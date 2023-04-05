@@ -8,7 +8,7 @@ package se.laz.casual.test.service.remote.producer;
 import se.laz.casual.connection.caller.CasualCaller;
 import se.laz.casual.test.service.remote.MissingResourceException;
 
-import javax.enterprise.inject.Produces;
+import jakarta.enterprise.inject.Produces;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
