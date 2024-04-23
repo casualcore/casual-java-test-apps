@@ -11,7 +11,7 @@ public class EnvTime
 {
     public static final String SLEEP_TIME_ENV_NAME = "CASUAL_JAVA_TEST_SLEEP_TIME";
     public static final String WORK_TIME_ENV_NAME = "CASUAL_JAVA_TEST_WORK_TIME";
-    private static final String DEFAULT_WORK_TIME = "100";
+    public static final String DEFAULT_TIME = "100";
     private EnvTime()
     {}
     public static EnvTime of()
@@ -28,6 +28,6 @@ public class EnvTime
     }
     private long getTimeInMillis(String envName)
     {
-        return Long.parseLong(Optional.ofNullable(System.getenv(envName)).orElse(DEFAULT_WORK_TIME));
+        return Long.parseLong(Optional.ofNullable(System.getenv(envName)).orElse(DEFAULT_TIME));
     }
 }
