@@ -12,7 +12,7 @@ buildscript {
 }
 
 plugins {
-    id 'org.sonarqube' version '2.7'
+  id("org.sonarqube") version "4.4.1.3373"
 }
 
 defaultTasks 'build'
@@ -39,7 +39,35 @@ allprojects{
 subprojects{
   apply from: "$rootProject.projectDir/versions.gradle"
   apply plugin: 'java-library'
+  sonar {
+    properties {
+        properties["sonar.host.url"] = 'http://localhost:9000'
+        properties["sonar.verbose"] = "true"
+        properties['sonar.java.source'] = 17
+     }
+  }
+  apply plugin: 'jacoco'  
+  test {
+    finalizedBy jacocoTestReport
+    useJUnitPlatform()
+      testLogging {
+        events "passed", "skipped", "failed"
+      }
+    }
+
+  jacocoTestReport {
+    reports {
+      xml.required = true
+      csv.required = false
+    }
+  }   
+  test{
+    jvmArgs '--add-opens=java.base/java.lang=ALL-UNNAMED', '--add-opens=java.base/java.util=ALL-UNNAMED'
+  }  
 }
+
+// always run tests when running sonar
+rootProject.tasks['sonar'].dependsOn.add(subprojects.tasks['test'])
 
 task dist(type: Sync) {
     allprojects { p ->

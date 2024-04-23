@@ -19,6 +19,14 @@ dependencies {
     compileOnly libs.casual_fielded_annotations
     compileOnly libs.javaee_api
     implementation libs.commons_io
+    // for spock
+    testImplementation platform(libs.groovy_bom)
+    testImplementation libs.groovy
+    testImplementation platform(libs.spock_bom)
+    testImplementation libs.spock_core
+    testImplementation libs.spock_junit4
+    testRuntimeOnly libs.byte_buddy
+    testRuntimeOnly libs.objenesis
 }
 
 

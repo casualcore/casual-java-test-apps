@@ -17,6 +17,10 @@ dependencies{
     compileOnly libs.casual_fielded_annotations
 
     // for spock
-    testImplementation libs.groovy_all
+    // for spock
+    testImplementation platform(libs.groovy_bom)
+    testImplementation libs.groovy
+    testImplementation platform(libs.spock_bom)
     testImplementation libs.spock_core
+    testImplementation libs.byte_buddy
 }
