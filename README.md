@@ -3,6 +3,7 @@
 ## casual-java-test-app
 
 Basic test application
+Note, needs jakarta
 
 ## Exported java services
 
