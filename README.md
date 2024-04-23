@@ -4,7 +4,7 @@
 
 Basic test application
 
-## Exported java servics
+## Exported java services
 
 ### javaEcho
 
