@@ -36,7 +36,7 @@ public class TestServiceImpl implements TestService
         this.tpCaller = tpCaller;
     }
 
-    @CasualService(name="javaEcho")
+    @CasualService(name="casual/example/java/echo")
     @Override
     public InboundResponse casualEcho(InboundRequest buffer)
     {
@@ -45,7 +45,7 @@ public class TestServiceImpl implements TestService
                               .build();
     }
 
-    @CasualService(name="javaForward")
+    @CasualService(name="casual/example/java/forward")
     @Override
     public InboundResponse forward(InboundRequest buffer)
     {
@@ -54,7 +54,7 @@ public class TestServiceImpl implements TestService
         return InboundResponse.createBuilder().buffer( returnBuffer).build();
     }
 
-    @CasualService(name="commit")
+    @CasualService(name="casual/example/java/commit")
     @Override
     public InboundResponse commit(InboundRequest buffer)
     {
@@ -63,7 +63,7 @@ public class TestServiceImpl implements TestService
                               .build();
     }
 
-    @CasualService(name="rollback")
+    @CasualService(name="casual/example/java/rollback")
     @Override
     public InboundResponse rollback(InboundRequest buffer)
     {
@@ -73,7 +73,7 @@ public class TestServiceImpl implements TestService
                               .build();
     }
 
-    @CasualService(name="work")
+    @CasualService(name="casual/example/java/work")
     @Override
     public InboundResponse work(InboundRequest buffer)
     {
@@ -83,7 +83,7 @@ public class TestServiceImpl implements TestService
                               .build();
     }
 
-    @CasualService(name="sleep")
+    @CasualService(name="casual/example/java/sleep")
     @Override
     public InboundResponse sleep(InboundRequest buffer)
     {
@@ -97,7 +97,7 @@ public class TestServiceImpl implements TestService
      * Note, should be called with TPNORETURN
      * @param buffer - the buffer to be ignored
      */
-    @CasualService(name="sink")
+    @CasualService(name="casual/example/java/sink")
     @Override
     public void sink(InboundRequest buffer)
     {
