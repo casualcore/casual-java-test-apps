@@ -26,10 +26,14 @@ dependencies {
     testImplementation libs.casual_api
     testImplementation libs.casual_caller_api
     // for spock
-    testImplementation libs.groovy_all
+    // for spock
+    testImplementation platform(libs.groovy_bom)
+    testImplementation libs.groovy
+    testImplementation platform(libs.spock_bom)
     testImplementation libs.spock_core
-    testImplementation libs.cglib_nodep
-    testImplementation libs.objenesis
+    testImplementation libs.spock_junit4
+    testRuntimeOnly libs.byte_buddy
+    testRuntimeOnly libs.objenesis
 }
 
 

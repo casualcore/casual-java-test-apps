@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022, The casual project. All rights reserved.
+ * Copyright (c) 2022 - 2024, The casual project. All rights reserved.
  *
  * This software is licensed under the MIT license, https://opensource.org/licenses/MIT
  */
@@ -39,11 +39,20 @@ import java.util.UUID;
 @Path("/queue")
 public class CasualQueue
 {
-    @Inject
-    CasualCaller casualCaller;
-
+    private CasualCaller casualCaller;
     @Resource
     private EJBContext ctx;
+
+    public CasualQueue()
+    {
+        // NOP ctor needed for CDI
+    }
+
+    @Inject
+    public CasualQueue(CasualCaller casualCaller)
+    {
+        this.casualCaller = casualCaller;
+    }
 
     @POST
     @Consumes("application/casual-x-octet")

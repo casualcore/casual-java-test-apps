@@ -12,4 +12,9 @@ public interface TestService
 {
     InboundResponse casualEcho(InboundRequest buffer);
     InboundResponse forward(InboundRequest buffer);
+    InboundResponse commit(InboundRequest buffer);
+    InboundResponse rollback(InboundRequest buffer);
+    InboundResponse work(InboundRequest buffer);
+    InboundResponse sleep(InboundRequest buffer);
+    void sink(InboundRequest buffer);
 }
