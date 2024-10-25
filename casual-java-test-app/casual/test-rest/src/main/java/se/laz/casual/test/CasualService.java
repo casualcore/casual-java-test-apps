@@ -28,7 +28,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 @Stateless
-@Path("/casual")
+@Path("/")
 public class CasualService
 {
     private CasualCaller casualCaller;
