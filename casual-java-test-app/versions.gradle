@@ -6,19 +6,18 @@
  */
 
 group = 'se.laz.casual'
-version = '2.0.3'
+version = '2.0.4-SNAPSHOT'
 
-def gson_version = '2.10.1'
-def casual_version = '3.2.35'
-def casual_caller_version = '3.2.17'
+def casual_version = '3.3.7'
+def casual_caller_version = '3.2.22'
 
 ext.libs = [
   javaee_api: 'jakarta.platform:jakarta.jakartaee-api:10.0.0',
   casual_api: "se.laz.casual:casual-api:${casual_version}",
+  casual_api_spi: "se.laz.casual:casual-api-spi-impl:${casual_version}",
   casual_inbound_handler_api: "se.laz.casual:casual-inbound-handler-api:${casual_version}",
   casual_fielded_annotations: "se.laz.casual:casual-fielded-annotations:${casual_version}",
-  casual_caller_api: "se.laz.casual:casual-caller-api:${casual_caller_version}",    
-  gson: "com.google.code.gson:gson:${gson_version}",
+  casual_caller_api: "se.laz.casual:casual-caller-api:${casual_caller_version}",
   microprofile_config: 'org.eclipse.microprofile.config:microprofile-config-api:1.4',
   // test
   hamcrest_all: 'org.hamcrest:hamcrest-all:1.3',

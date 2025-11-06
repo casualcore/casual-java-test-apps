@@ -16,7 +16,9 @@ dependencies{
     compileOnly libs.casual_inbound_handler_api
     compileOnly libs.casual_fielded_annotations
 
-    // for spock
+    //for test
+    testImplementation libs.casual_api
+
     // for spock
     testImplementation platform(libs.groovy_bom)
     testImplementation libs.groovy
