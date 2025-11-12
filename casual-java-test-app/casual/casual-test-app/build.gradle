@@ -15,6 +15,7 @@ dependencies {
     implementation project( ':casual:test-ejb' )
     implementation project( ':casual:test-rest' )
     implementation libs.casual_caller_api
+    implementation libs.gson
 }
 
 war{
