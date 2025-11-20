@@ -16,8 +16,8 @@ dependencies{
     compileOnly libs.casual_inbound_handler_api
     compileOnly libs.casual_fielded_annotations
 
-    //implementation libs.casual_api_spi_impl
-    implementation libs.gson
+    implementation libs.casual_api_spi_impl
+    implementation libs.objenesis
 
     //for test
     testImplementation libs.casual_api
