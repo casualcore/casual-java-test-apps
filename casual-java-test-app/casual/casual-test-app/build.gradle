@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022, The casual project. All rights reserved.
+ * Copyright (c) 2022 - 2025, The casual project. All rights reserved.
  *
  * This software is licensed under the MIT license, https://opensource.org/licenses/MIT
  */
@@ -15,7 +15,6 @@ dependencies {
     implementation project( ':casual:test-ejb' )
     implementation project( ':casual:test-rest' )
     implementation libs.casual_caller_api
-    implementation libs.gson
 }
 
 war{
