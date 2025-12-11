@@ -1,11 +1,23 @@
 /*
- * Copyright (c) 2022 - 2024, The casual project. All rights reserved.
+ * Copyright (c) 2022 - 2025, The casual project. All rights reserved.
  *
  * This software is licensed under the MIT license, https://opensource.org/licenses/MIT
  */
 
 package se.laz.casual.test;
 
+import jakarta.annotation.Resource;
+import jakarta.ejb.EJBContext;
+import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.Response;
 import org.apache.commons.io.IOUtils;
 import se.laz.casual.api.buffer.CasualBuffer;
 import se.laz.casual.api.buffer.type.OctetBuffer;
@@ -18,21 +30,14 @@ import se.laz.casual.api.queue.QueueMessage;
 import se.laz.casual.connection.caller.CasualCaller;
 import se.laz.casual.test.service.remote.QueueCallFailedException;
 
-import jakarta.annotation.Resource;
-import jakarta.ejb.EJBContext;
-import jakarta.ejb.Stateless;
-import jakarta.inject.Inject;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.QueryParam;
-import jakarta.ws.rs.core.Response;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Stateless
@@ -86,7 +91,7 @@ public class CasualQueue
      * @param uuid optional uuid to pop.
      * @return response containing dequeued message if found.
      */
-    @GET
+    @POST
     @Path("dequeue/{queueName}")
     public Response dequeue(@PathParam("queueName") String queueName, @QueryParam("uuid") String uuid)
     {
@@ -127,11 +132,31 @@ public class CasualQueue
             QueueMessage msg = reply.getQueueMessage().orElse(null);
             if(null != msg)
             {
-                return new String(msg.getPayload().getBytes().get(0), StandardCharsets.UTF_8) + "\nmsg id: " + msg.getId();
+                return toJson( msg );
             }
             return "No more messages on queue: " + queueName;
         }
         throw new QueueCallFailedException("dequeue for queue: " + queueName + " failed with: " + reply.getErrorState());
+    }
+
+    private String toJson( QueueMessage msg )
+    {
+        JsonObject jo = Json.createObjectBuilder()
+                .add( "id", msg.getId().toString() )
+                .add( "payload", new String( msg.getPayload().getBytes().get( 0 ), StandardCharsets.UTF_8 ) )
+                .add( "redelivered", msg.getRedelivered() )
+                .add( "replyQueue", msg.getReplyQueue() )
+                .add( "correlationInformation", msg.getCorrelationInformation() )
+                .add( "availableSince", instanceToIsoZonedDateTimeString( msg.getAvailableSince() ))
+                .add( "timestamp", instanceToIsoZonedDateTimeString( msg.getTimestamp() ))
+                .build();
+
+        return jo.toString();
+    }
+
+    private String instanceToIsoZonedDateTimeString( Instant instant )
+    {
+        return ZonedDateTime.ofInstant( instant, ZoneId.systemDefault() ).format( DateTimeFormatter.ISO_ZONED_DATE_TIME );
     }
 
 }
