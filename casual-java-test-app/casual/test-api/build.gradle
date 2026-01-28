@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022, The casual project. All rights reserved.
+ * Copyright (c) 2022 - 2025, The casual project. All rights reserved.
  *
  * This software is licensed under the MIT license, https://opensource.org/licenses/MIT
  */
@@ -16,7 +16,12 @@ dependencies{
     compileOnly libs.casual_inbound_handler_api
     compileOnly libs.casual_fielded_annotations
 
-    // for spock
+    implementation libs.casual_api_spi_impl
+    implementation libs.objenesis
+
+    //for test
+    testImplementation libs.casual_api
+
     // for spock
     testImplementation platform(libs.groovy_bom)
     testImplementation libs.groovy
