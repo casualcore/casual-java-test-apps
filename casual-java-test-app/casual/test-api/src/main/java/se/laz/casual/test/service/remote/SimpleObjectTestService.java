@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025, The casual project. All rights reserved.
+ * Copyright (c) 2025 - 2026, The casual project. All rights reserved.
  *
  * This software is licensed under the MIT license, https://opensource.org/licenses/MIT
  */
@@ -11,9 +11,9 @@ import se.laz.casual.test.data.SimpleObject;
 public interface SimpleObjectTestService
 {
     /**
-     * Echo the provided input marshalling to an from fieled.
+     * Echo the provided input marshalling to and from fielded.
      * @param echoMe
-     * @return
+     * @return the echoed object.
      */
     SimpleObject echoFielded( SimpleObject echoMe );
 

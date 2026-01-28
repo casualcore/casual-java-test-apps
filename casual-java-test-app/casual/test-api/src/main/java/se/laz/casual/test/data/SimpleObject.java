@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025, The casual project. All rights reserved.
+ * Copyright (c) 2025 - 2026, The casual project. All rights reserved.
  *
  * This software is licensed under the MIT license, https://opensource.org/licenses/MIT
  */
@@ -25,7 +25,7 @@ public class SimpleObject implements Serializable
 
     }
 
-    public SimpleObject( long id, String name )
+    public SimpleObject( Long id, String name )
     {
         this.id = id;
         this.name = name;
@@ -54,16 +54,12 @@ public class SimpleObject implements Serializable
     @Override
     public boolean equals( Object o )
     {
-        if( this == o )
-        {
-            return true;
-        }
         if( o == null || getClass() != o.getClass() )
         {
             return false;
         }
         SimpleObject that = (SimpleObject) o;
-        return id == that.id && Objects.equals( name, that.name );
+        return Objects.equals( id, that.id ) && Objects.equals( name, that.name );
     }
 
     @Override
