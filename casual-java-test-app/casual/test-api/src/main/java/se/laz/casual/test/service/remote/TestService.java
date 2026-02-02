@@ -10,6 +10,7 @@ import se.laz.casual.jca.inbound.handler.InboundResponse;
 
 public interface TestService
 {
+    InboundResponse executorForward(InboundRequest request);
     InboundResponse casualEcho(InboundRequest buffer);
     InboundResponse forward(InboundRequest buffer);
     InboundResponse commit(InboundRequest buffer);

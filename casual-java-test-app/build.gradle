@@ -1,10 +1,9 @@
+//-*- coding: utf-8-unix -*-
 /*
  * Copyright (c) 2017 - 2020, The casual project. All rights reserved.
  *
  * This software is licensed under the MIT license, https://opensource.org/licenses/MIT
  */
-
-//-*- coding: utf-8 -*-
 buildscript {
     repositories {
         mavenCentral()
@@ -32,7 +31,10 @@ allprojects{
     options.compilerArgs << "-Xlint:all" << "-Werror"
   }
   repositories {
-    mavenCentral()
+     mavenCentral()
+        maven{
+            url = 'https://central.sonatype.com/repository/maven-snapshots/' 
+    }
   }
 }
 

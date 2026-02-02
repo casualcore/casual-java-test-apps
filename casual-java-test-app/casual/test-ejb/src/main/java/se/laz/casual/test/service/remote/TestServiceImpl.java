@@ -7,8 +7,10 @@ package se.laz.casual.test.service.remote;
 
 import jakarta.ejb.Remote;
 import jakarta.ejb.Stateless;
+import jakarta.enterprise.concurrent.ManagedExecutorService;
 import jakarta.inject.Inject;
 import se.laz.casual.api.buffer.CasualBuffer;
+import se.laz.casual.api.concurrency.Concurrent;
 import se.laz.casual.api.flags.AtmiFlags;
 import se.laz.casual.api.flags.ErrorState;
 import se.laz.casual.api.flags.Flag;
@@ -16,7 +18,12 @@ import se.laz.casual.api.service.CasualService;
 import se.laz.casual.jca.inbound.handler.InboundRequest;
 import se.laz.casual.jca.inbound.handler.InboundResponse;
 
+import jakarta.annotation.Resource;
 import java.util.Optional;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 @Stateless
 @Remote(TestService.class)
@@ -26,6 +33,9 @@ public class TestServiceImpl implements TestService
     private static final Delayer delayer = Delayer.of();
     private TpCaller tpCaller;
 
+    @Resource
+    ManagedExecutorService executorService;
+
     // wls
     public TestServiceImpl()
     {}
@@ -34,6 +44,22 @@ public class TestServiceImpl implements TestService
     public TestServiceImpl(TpCaller tpCaller)
     {
         this.tpCaller = tpCaller;
+    }
+
+    @CasualService(name="casual/example/java/executor/forward")
+    @Override
+    public InboundResponse executorForward(InboundRequest request)
+    {
+        Callable<InboundResponse> callable = Concurrent.wrap(() -> forward(request));
+        var future = executorService.submit(callable);
+        try
+        {
+            return future.get(2, TimeUnit.SECONDS);
+        }
+        catch (InterruptedException | ExecutionException | TimeoutException e)
+        {
+            return ErrorResponse.create(request.getBuffer(), e);
+        }
     }
 
     @CasualService(name="casual/example/java/echo")

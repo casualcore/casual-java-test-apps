@@ -1,4 +1,4 @@
-
+//-*- coding: utf-8-unix -*-
 /*
  * Copyright (c) 2017 - 2026, The casual project. All rights reserved.
  *
@@ -6,12 +6,12 @@
  */
 
 group = 'se.laz.casual'
-version = '2.0.4'
+version = '2.0.5'
 
-def casual_version = '3.3.8'
-def casual_caller_version = '3.2.22'
+def casual_version = '3.3.10-SNAPSHOT'
+def casual_caller_version = '3.3.2'
 
-def gson_version = '2.11.0'
+def gson_version = '2.13.2'
 
 ext.libs = [
   javaee_api: 'jakarta.platform:jakarta.jakartaee-api:10.0.0',
