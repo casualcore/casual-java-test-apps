@@ -8,4 +8,5 @@
 include 'casual:test-api'
 include 'casual:test-ejb'
 include 'casual:test-rest'
+include 'casual:test-casual-service-handler'
 include 'casual:casual-test-app'
