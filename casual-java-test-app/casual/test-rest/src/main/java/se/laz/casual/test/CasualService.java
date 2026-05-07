@@ -33,10 +33,14 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import static java.lang.System.Logger.Level.INFO;
+
 @Stateless
 @Path("/casual")
 public class CasualService
 {
+    System.Logger logger = System.getLogger( CasualService.class.getName() );
+
     private CasualCaller casualCaller;
     @Resource
     private EJBContext ctx;
@@ -64,14 +68,17 @@ public class CasualService
             byte[] data = IOUtils.toByteArray(inputStream);
             Flag<AtmiFlags> flags = Flag.of(AtmiFlags.NOFLAG);
 
+            logger.log( INFO, ()->"httpHeaders: " + httpHeaders.toString() );
+            logger.log( INFO, ()->"includeHeaders: " + includeHeaders );
             CasualHeaders headers = HeaderMapper.applyHeaders( httpHeaders.getRequestHeaders(), includeHeaders );
-
+            logger.log( INFO, ()-> "casual header sent: " + headers );
             OctetBuffer buffer = OctetBuffer.of(data, headers );
 
             CasualBuffer result = makeServiceCall(buffer, serviceName, flags);
 
             Response.ResponseBuilder builder = Response.ok().entity(result.getBytes().get(0));
 
+            logger.log( INFO, ()-> "casual headers returned: " + result.getHeaders() );
             HeaderMapper.applyHeaders( result.getHeaders(), builder );
 
             return builder.build();
