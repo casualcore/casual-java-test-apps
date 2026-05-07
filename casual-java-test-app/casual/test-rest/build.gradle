@@ -8,6 +8,7 @@
 
 plugins {
     id 'java-library'
+    id 'groovy'
 }
 
 dependencies {
@@ -19,6 +20,11 @@ dependencies {
     compileOnly libs.casual_fielded_annotations
     compileOnly libs.javaee_api
     implementation libs.commons_io
+
+    //test
+    testImplementation libs.javaee_api
+    testImplementation libs.casual_api
+    testImplementation libs.resteasy
     // for spock
     testImplementation platform(libs.groovy_bom)
     testImplementation libs.groovy
