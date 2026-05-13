@@ -22,8 +22,6 @@ import java.util.Optional;
 @Remote(TestService.class)
 public class TestServiceImpl implements TestService
 {
-    System.Logger logger = System.getLogger( TestServiceImpl.class.getName() );
-
     public static final String JAVA_FORWARD_ENV_NAME = "JAVA_FORWARD_SERVICE_NAME";
     private static final Delayer delayer = Delayer.of();
     private TpCaller tpCaller;
@@ -42,7 +40,6 @@ public class TestServiceImpl implements TestService
     @Override
     public InboundResponse casualEcho(InboundRequest buffer)
     {
-        logger.log( System.Logger.Level.INFO, ()-> "echo headers received: " + buffer.getBuffer().getHeaders() );
         return InboundResponse.createBuilder()
                               .buffer( buffer.getBuffer() )
                               .build();
