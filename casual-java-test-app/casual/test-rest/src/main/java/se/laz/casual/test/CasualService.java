@@ -5,8 +5,13 @@
  */
 package se.laz.casual.test;
 
+import jakarta.ws.rs.DefaultValue;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.HttpHeaders;
 import org.apache.commons.io.IOUtils;
 import se.laz.casual.api.buffer.CasualBuffer;
+import se.laz.casual.api.buffer.CasualHeaders;
 import se.laz.casual.api.buffer.ServiceReturn;
 import se.laz.casual.api.buffer.type.OctetBuffer;
 import se.laz.casual.api.flags.AtmiFlags;
@@ -27,6 +32,9 @@ import jakarta.ws.rs.core.Response;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+
+import static java.lang.System.Logger.Level.INFO;
+
 @Stateless
 @Path("/casual")
 public class CasualService
@@ -34,6 +42,8 @@ public class CasualService
     private CasualCaller casualCaller;
     @Resource
     private EJBContext ctx;
+
+    @Context HttpHeaders httpHeaders;
 
     public CasualService()
     {
@@ -49,14 +59,24 @@ public class CasualService
     @POST
     @Consumes("application/casual-x-octet")
     @Path("{serviceName}")
-    public Response serviceRequest(@PathParam("serviceName") String serviceName, InputStream inputStream)
+    public Response serviceRequest( @PathParam("serviceName") String serviceName, @DefaultValue ( HeaderMapper.NONE ) @QueryParam( "includeHeaders" ) String includeHeaders, InputStream inputStream)
     {
         try
         {
             byte[] data = IOUtils.toByteArray(inputStream);
             Flag<AtmiFlags> flags = Flag.of(AtmiFlags.NOFLAG);
-            OctetBuffer buffer = OctetBuffer.of(data);
-            return Response.ok().entity(makeServiceCall(buffer, serviceName, flags).getBytes().get(0)).build();
+
+            CasualHeaders headers = HeaderMapper.applyHeaders( httpHeaders.getRequestHeaders(), includeHeaders );
+            OctetBuffer buffer = OctetBuffer.of(data, headers );
+
+            CasualBuffer result = makeServiceCall(buffer, serviceName, flags);
+
+            Response.ResponseBuilder builder = Response.ok().entity(result.getBytes().get(0));
+
+            HeaderMapper.applyHeaders( result.getHeaders(), builder );
+
+            return builder.build();
+
         }
         catch (Exception e)
         {
@@ -80,5 +100,7 @@ public class CasualService
         }
         throw new ServiceCallFailedException("tpcall failed: " + reply.getErrorState());
     }
+
+
 
 }
